@@ -1,0 +1,17 @@
+hr {
+  border-top: 1px solid red;
+  height: 1px;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+.star {
+  font-size: 1.2rem;
+  color: #f39c12;
+}
+.card-header-bg {
+  background-color: #f39c12;
+  color: white;
+}

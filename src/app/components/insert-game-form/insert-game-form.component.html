@@ -1,0 +1,41 @@
+<div class="container">
+  <h4>Insertar nuevo juego</h4>
+  <form [formGroup]="formGroup">
+
+    <div class="form-group">
+      <label for="name">Título</label>
+      <div class="input-group">
+        <input type="text" id="name" class="form-control" placeholder="Titulo juego" name="name" formControlName="name" >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="image">Url imagen portada: </label>
+      <div class="input-group">
+        <input type="text" id="image" class="form-control" placeholder="Url imagen" name="image" formControlName="image" >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="Rating">Rating (1 al 10): </label>
+      <div class="input-group">
+        <input type="number" id="rating" class="form-control" placeholder="Rating (1 al 10)" name="rating" formControlName="rating" max="10">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="genres">Géneros: </label>
+      <select multiple class="form-control" id="genres" formControlName="genres">
+        <option *ngFor="let genre of genres" value="{{genre.id}}">{{genre.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="summary">Sumario</label>
+      <div class="input-group">
+        <textarea class="w-100" id="summary" name="summary" id="" cols="30" rows="10" formControlName="summary"></textarea>
+      </div>
+    </div>
+  </form>
+  <button class="btn btn-primary" type="button" (click)="insertGame(formGroup.value)">Enviar</button>
+</div>
+

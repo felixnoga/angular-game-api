@@ -1,0 +1,90 @@
+<div class="row">
+  <div class="col col-md-auto" *ngFor ="let game of games | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize | filterNames: searchString ">
+    <div class="card h-100" style="width: 18rem;" >
+
+      <img class="card-img-top" src="{{game.cover.url | replaceImage}}" alt="Card image cap" height="260px">
+      <div class="card-header card-header-bg">
+        {{game.name | uppercase}}
+      </div>
+      <div class="card-body d-flex flex-column">
+
+        <div *ngIf="game.genres">
+          <span *ngFor="let genre of game.genres" class="badge badge-pill badge-secondary mr-1">{{genre.name}}</span>
+        </div>
+        <hr>
+        <p class="card-text text-secondary">{{game.summary | slice:0:200}}...</p>
+        <p>Rating ({{game.total_rating}}/10):  <ngb-rating [(rate)]="game.total_rating" [readonly]="true" class="star"></ngb-rating> </p>
+
+        <div class="mt-auto d-flex flex-row justify-content-around">
+          <a href="#" class="btn btn-primary btn-sm" (click)="openModal(gameEdit, game.id, game.name, game.summary, game.cover.url, game.total_rating)"><fa-icon [icon]="faEdit"></fa-icon> Editar</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<ng-template #gameEdit let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Editar {{idprueba.name}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>SuperPower 2 is a real-time strategy wargame developed by Canadian based GolemLabs and published by DreamCatcher Games in 2004, following SuperPower. It was released between October 11 and November 19, 2004 in North America and Europe, respectively.
+  <div class="modal-body">
+    <form [formGroup]="formGroup">
+      <div class="form-group">
+        <label for="name">Título</label>
+        <div class="input-group">
+          <input type="text" id="name" class="form-control" placeholder="Titulo juego" name="name" formControlName="name" >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="image">Url imagen portada: </label>
+        <div class="input-group">
+          <input type="text" id="image" class="form-control" placeholder="Url imagen" name="image" formControlName="image" >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="Rating">Rating (1 al 10): </label>
+        <div class="input-group">
+          <input type="number" id="rating" class="form-control" placeholder="Url imagen" name="rating" formControlName="rating">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="genres">Géneros: </label>
+        <select multiple class="form-control" id="genres" formControlName="genres">
+          <option *ngFor="let genre of genres" value="{{genre.id}}">{{genre.name}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="summary">Sumario</label>
+        <div class="input-group">
+          <textarea class="w-100" id="summary" name="summary" id="" cols="30" rows="10" formControlName="summary"></textarea>
+        </div>
+      </div>
+
+
+    </form>
+    <div class="d-flex flex-row justify-content-around">
+      <a href="#" class="btn btn-outline-info" (click)="editGame(formGroup.value)"><fa-icon [icon]="faCheck"></fa-icon> Editar</a>
+      <a href="#" class="btn btn-outline-danger btn" (click)="modal.dismiss('Cancelled modal')"><fa-icon [icon]="faCancel"></fa-icon> Cancelar</a>
+      <a href="#" class="btn btn-outline-danger btn" (click)="deleteGame(formGroup.value)"><fa-icon [icon]="faCancel"></fa-icon> Borrar juego</a>
+
+    </div>
+
+
+  </div>
+</ng-template>
+<div class="pagination">
+  <ngb-pagination
+    [(page)]="page"
+    [pageSize]="pageSize"
+    [collectionSize]="games.length"></ngb-pagination>
+</div>
+
